@@ -86,6 +86,7 @@ First time running T-lex2.3 (for different options, see "OPTIONS/PARAMETERS"):
         perl tlex-open-v2.3.pl -O projectname -A 95 -pairends yes -s 'drosophila' -pooled -T TElist_file.txt -M TEannotation_file.txt -G genome_file.fa -R path_to_input/strain
 
     >**Output:** path_to_folder/tlex_projectname/Tresults
+
     >**Output:** path_to_folder/tlex_projectname/Tfreq
 
 4. TSD analysis in any strain (requires ABSENT module alredy run)
@@ -156,7 +157,7 @@ After first time run we recommend the user:
 | -freq | | return the TE frequency based on the given strains|
 | -minP | | minimum number of TE calls to estimate the TE frequency ( default: 1 )|
 
-### **EXAMPLES++
+### **EXAMPLES**
 A small dataset example is provided. This dataset correspond only to a few TEs in an individual Drosophila melanogaster strain. Run the following command lines in the "example" folder.
 
     perl tlex-open-v2.3.pl -O example -A 95 -pairends yes -noFilterTE -T TElist_example.txt -M TEannotation_example.txt -G genome_example.fa -R fastq_files/example
