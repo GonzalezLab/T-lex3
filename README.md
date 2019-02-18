@@ -1,18 +1,16 @@
-# **Welcome to _T-lex 2.3_ manual**
+# **Welcome to _T-lex 2.5_ manual**
 
-**Release 2.3:** Maria Bogaerts <maria.bogaerts@ibe.upf-csic.es>, Josefa Gonzalez <josefa.gonzalez@ibe.upf-csic.es>
+**Release 2.5:** Maria Bogaerts <maria.bogaerts@ibe.upf-csic.es>, Josefa Gonzalez <josefa.gonzalez@ibe.upf-csic.es>
 
 [You can find us on Github!](https://github.com/GonzalezLab/T-lex)
 
 T-lex is a computational pipeline that detects presence and/or absence of annotated individual transposable elements (TEs) using next-generation sequencing (NGS) data. 
 ### **UPDATES** 
-**Version 2.3:**
+**Version 2.5:**
 - In the PRESENCE module, **MAQ** is changed by **BWA-MEM**
-- Filtering steps are added due to the change of mapper and adds a more accurate result
-- Tresults file now has two more columns providing the _"filtered number of reads"_ in the left and in the right flaking region of the TE for more accurate pool frequency estimation
-- _Absent/polymorphic_ and _present/polymorphic_ calls are considered as _no_data_ 
-- Minimum and maximum number of reads are required for calculating TE frequencies from pool data
-- Minimum number of strains with calls for each TEs are required to calculate frequencies from individual strains
+- Filtering steps are added to increase the accuracy of genotyping
+- New parameters that allow the user to control the minimum and maximum number of reads, and the minimum number of strains to genotype a TE insertion
+- Fixed several bugs present in the previous version
 
 **Previous versions:**    
 	    **T-lex** _Fiston-Lavier et al., 2015_ |
@@ -60,38 +58,62 @@ To handle paired-end reads, separate the reads from a same pair ([strain name]) 
                    [strain name]_2.fastq
 
 ### **RUNNING T-LEX / USAGE**
-T-lex2.3 is composed by five different modules. All the modules can be run in the same job, excepting calculating frequencies for individual strains and TSD detection (see OPTIONS). Each module can be also run independently in case only one part of the analysis is required.
+T-lex2.5 is composed by five different modules. All the modules can be run in the same job, excepting calculating frequencies for individual strains and TSD detection (see OPTIONS). Each module can be also run independently in case only one part of the analysis is required.
 
 General usage:
 
-    tlex-open-v2.3.pl [ Options ] [ -T TE list ] [ -M TE annotations ] [ -G reference genome ] [ -R NGS data ]
+    tlex-open-v2.5.pl [ Options ] [ -T TE list ] [ -M TE annotations ] [ -G reference genome ] [ -R NGS data ]
 
-First time running T-lex2.3 (for different options, see "OPTIONS/PARAMETERS"):
+First time running T-lex2.5 (for different options, see "OPTIONS/PARAMETERS"):
 
 1. General run for one strain: TE-filtering, presence, absence, combine
         
-        perl tlex-open-v2.3.pl -O projectname -A 95 -pairends yes -s 'drosophila' -T TElist_file.txt -M TEannotation_file.txt -G genome_file.fa -R path_to_input/strain
+        perl tlex-open-v2.5.pl \
+        -O projectname \
+        -A 95 \
+        -pairends yes \
+        -s 'drosophila' \
+        -T TElist_file.txt \
+        -M TEannotation_file.txt \
+        -G genome_file.fa \
+        -R path_to_input/strain
     >**Output:** path_to_folder/tlex_projectname/Tresults
 
- 2. Frequency estimation in several individual strains
+ 2. Frequency estimation in several individual strains (NOTE: projectname is required if different strains are run, otherwise the _tlex_output_ folder will be overwrite by the following strain)
         
-        perl tlex-open-v2.3.pl -combData
+        perl tlex-open-v2.5.pl -combData
     >**Output:** path_to_folder/Tfreqs_output/Tresults  
 
-        perl tlex-open-v2.3.pl -freq
+        perl tlex-open-v2.5.pl -freq
     >**Output:** path_to_folder/Tfreqs_output/Tfreq
 
 3. General run in a pool strain including frequency estimation
 
-        perl tlex-open-v2.3.pl -O projectname -A 95 -pairends yes -s 'drosophila' -pooled -T TElist_file.txt -M TEannotation_file.txt -G genome_file.fa -R path_to_input/strain
+        perl tlex-open-v2.5.pl \
+        -O projectname \
+        -A 95 \
+        -pairends yes \
+        -s 'drosophila' \
+        -pooled \
+        -T TElist_file.txt \-M TEannotation_file.txt -G genome_file.fa -R path_to_input/strain
 
     >**Output:** path_to_folder/tlex_projectname/Tresults
-
     >**Output:** path_to_folder/tlex_projectname/Tfreq
 
 4. TSD analysis in any strain (requires ABSENT module alredy run)
 
-        perl tlex-open-v2.3.pl -tsd -align -p -O projectname -A 95 -pairends yes -s 'drosophila' -T TElist_file.txt -M TEannotation_file.txt -G genome_file.fa -R path_to_input/strain
+        perl tlex-open-v2.5.pl \
+        -tsd \
+        -align \
+        -p \
+        -O projectname \
+        -A 95 \
+        -pairends yes \
+        -s 'drosophila' \
+        -T TElist_file.txt \
+        -M TEannotation_file.txt \
+        -G genome_file.fa \
+        -R path_to_input/strain
 
     >**Output:** path_to_folder/Tannot_TSDdetection       
 
@@ -111,8 +133,8 @@ After first time run we recommend the user:
 | Parameters | Type | Description |
 |----|----|---- |
 | **General parameters:** |
-| -A | int | maximum read length in the data set in bp ( default = 100 ) |
-| -O     |string     | project name
+| -A | int | maximum read length in the data set in bp ( default: 100 ) |
+| -O     |string     | project name (default: _tlex_output_)
 | -R     |string     | NGS data in FASTQ path
 | -G     |string     | Path to reference genome
 | -T     |string     | Path to TE list
@@ -160,11 +182,30 @@ After first time run we recommend the user:
 ### **EXAMPLES**
 A small dataset example is provided. This dataset correspond only to a few TEs in an individual Drosophila melanogaster strain. Run the following command lines in the "example" folder.
 
-    perl tlex-open-v2.3.pl -O example -A 95 -pairends yes -noFilterTE -T TElist_example.txt -M TEannotation_example.txt -G genome_example.fa -R fastq_files/example
+    perl tlex-open-v2.5.pl \
+    -O example \
+    -A 95 \
+    -pairends yes \
+    -noFilterTE \
+    -T TElist_example.txt \
+    -M TEannotation_example.txt \
+    -G genome_example.fa \
+    -R fastq_files/example
 
 For TSD detection:
 
-    perl tlex-open-v2.3.pl -tsd -align -p -O example -A 95 -pairends yes -noFilterTE -T TElist_example.txt -M TEannotation_example.txt -G genome_example.fa -R fastq_files/example
+    perl tlex-open-v2.5.pl \
+    -tsd \
+    -align \
+    -p \
+    -O example \
+    -A 95 \
+    -pairends yes \
+    -noFilterTE \
+    -T TElist_example.txt \
+    -M TEannotation_example.txt \
+    -G genome_example.fa \
+    -R fastq_files/example
 
       
 ### **OUTPUTS**
@@ -231,6 +272,10 @@ Using the option '-pooled', T-lex can also estimate the frequency for each TE in
 ### **FAQ**
 >To be completed by the users
 
+1. _T-lex2.5_ has stopped before finishing.
+
+    
+
 ### **REFERENCES** 
 - RepeatMasker. version Open 3.2.8 A.F.A. Smit, R. Hubley & P. Green RepeatMasker [here](http://www.repeatmasker.org/).
 - Jurka,J., Kapitonov,V.V., Pavlicek,A., Klonowski,P., Kohany,O., Walichiewicz,J. (2005) Repbase update, a database of eukaryotic repetitive elements. Cytogenet Genome Res 110:462_467
@@ -243,4 +288,3 @@ Using the option '-pooled', T-lex can also estimate the frequency for each TE in
 - Li H.*, Handsaker B.*, Wysoker A., Fennell T., Ruan J., Homer N., Marth G., Abecasis G., Durbin R. and 1000 Genome Project Data Processing Subgroup (2009) The Sequence alignment/map (SAM) format and SAMtools. Bioinformatics, 25, 2078-9. [PMID: 19505943]
 - Fiston-Lavier AS, Carrigan M, Petrov DA and Gonzalez J. T-LEX: A program for fast and accurate assessment of transposable element presence using next-generation sequencing data. Nuc. Acids. Res. 2011 Mar 1;39(6):e36. Epub 2010 Dec 21
 - Fiston-Lavier AS, Barron MG, Petrov DA, Gonzalez J. T-lex2: genotyping, frequency estimation and re-annotation of transposable elements using single or pooled next-generation sequencing data. Nucleic Acids Res. 2015;43(4):e22. pmid:25510498
-
