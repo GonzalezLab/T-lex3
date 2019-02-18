@@ -125,7 +125,7 @@ If only one of the Presence or Absence modules is run, results are obtained in t
 
 After first time run we recommend the user:
 
-* T-lex generates a list with filtered TEs, TElist_file.txt_new, which is located in the same folder as the original input TE list. We recommend to use this new file as input list parameter, and bypass the TE-analysis with the command -noFilterTE (see options).
+* T-lex generates a list with filtered TEs, TElist_file.txt_filtered, which is located in the same folder as the original input TE list. We recommend to use this new file as input list parameter, and bypass the TE-analysis with the command -noFilterTE (see options).
 * T-lex generates a new file according with the TSD detection. We recommend changing the annotation input file according with this information and use this new file as input annotation parameter. For following runs, the TSD module could be bypassed.
 
 ### **OPTIONS**
