@@ -180,13 +180,12 @@ After first time run we recommend the user:
 | -minP | | minimum number of TE calls to estimate the TE frequency ( default: 1 )|
 
 ### **EXAMPLES**
-A small dataset example is provided. This dataset correspond only to a few TEs in an individual Drosophila melanogaster strain. Run the following command lines in the "example" folder.
+A small dataset example is provided. This dataset correspond only to a few TEs in an individual _Drosophila melanogaster_ strain. In addition, different results for the combination of individual strains are available. Run the following command lines in the "example" folder.
 
     perl tlex-open-v2.5.pl \
     -O example \
     -A 95 \
     -pairends yes \
-    -noFilterTE \
     -T TElist_example.txt \
     -M TEannotation_example.txt \
     -G genome_example.fa \
@@ -201,12 +200,15 @@ For TSD detection:
     -O example \
     -A 95 \
     -pairends yes \
-    -noFilterTE \
     -T TElist_example.txt \
     -M TEannotation_example.txt \
     -G genome_example.fa \
     -R fastq_files/example
 
+Combination of different strains (in folders: ):
+
+    perl tlex-open-v2.5.pl \
+    -combData
       
 ### **OUTPUTS**
 T-lex produces several of output directories and files. The output is stored in a working directory named by default: 'tlex_output' or 'tlex_[project name]'. By default, only the final results (the 'Tresults' file) and the data necessary for the manual curation (the 'Tanalysis' and 'Talign' sub-directories) are returned.
@@ -270,9 +272,10 @@ Using the option '-pooled', T-lex can also estimate the frequency for each TE in
 
 
 ### **FAQ**
->To be completed by the users
+To be completed by the users
 
-1. _T-lex2.5_ has stopped before finishing.
+**1. _T-lex2.5_ has stopped before finishing.**
+>Try to increase the RAM used for the program. With some species, _T-lex_ requires more RAM to execute the program.
 
     
 
