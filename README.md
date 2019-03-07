@@ -1,12 +1,12 @@
 # **Welcome to _T-lex 3_ manual**
 
-**Release 2.5:** Maria Bogaerts <maria.bogaerts@ibe.upf-csic.es>, Josefa Gonzalez <josefa.gonzalez@ibe.upf-csic.es>
+**Release 3:** Maria Bogaerts <maria.bogaerts@ibe.upf-csic.es>, Josefa Gonzalez <josefa.gonzalez@ibe.upf-csic.es>
 
 [You can find us on Github!](https://github.com/GonzalezLab/T-lex)
 
 T-lex is a computational pipeline that detects presence and/or absence of annotated individual transposable elements (TEs) using next-generation sequencing (NGS) data. 
 ### **UPDATES** 
-**Version 2.5:**
+**Version 3:**
 - In the PRESENCE module, **MAQ** is changed by **BWA-MEM**
 - Filtering steps are added to increase the accuracy of genotyping
 - New parameters that allow the user to control the minimum and maximum number of reads, and the minimum number of strains to genotype a TE insertion
@@ -63,13 +63,13 @@ T-lex3 is composed by five different modules. All the modules can be run in the 
 
 General usage:
 
-    tlex-open-v2.5.pl [ Options ] [ -T TE list ] [ -M TE annotations ] [ -G reference genome ] [ -R NGS data ]
+    tlex-open-v3.pl [ Options ] [ -T TE list ] [ -M TE annotations ] [ -G reference genome ] [ -R NGS data ]
 
 First time running T-lex3 (for different options, see "OPTIONS/PARAMETERS"):
 
 1. General run for one strain: TE-filtering, presence, absence, combine
         
-        perl tlex-open-v2.5.pl \
+        perl tlex-open-v3.pl \
         -O projectname \
         -A 95 \
         -pairends yes \
@@ -82,15 +82,15 @@ First time running T-lex3 (for different options, see "OPTIONS/PARAMETERS"):
 
  2. Frequency estimation in several individual strains (NOTE: _projectname_ is required if different strains are run, otherwise the _tlex_output_ folder will be overwritten by the following strain)
         
-        perl tlex-open-v2.5.pl -combData
+        perl tlex-open-v3.pl -combData
     >**Output:** path_to_folder/Tfreqs_output/Tresults  
 
-        perl tlex-open-v2.5.pl -freq
+        perl tlex-open-v3.pl -freq
     >**Output:** path_to_folder/Tfreqs_output/Tfreq
 
 3. General run in a pool strain including frequency estimation
 
-        perl tlex-open-v2.5.pl \
+        perl tlex-open-v3.pl \
         -O projectname \
         -A 95 \
         -pairends yes \
@@ -106,7 +106,7 @@ First time running T-lex3 (for different options, see "OPTIONS/PARAMETERS"):
 
 4. TSD analysis in any strain (requires ABSENT module alredy run)
 
-        perl tlex-open-v2.5.pl \
+        perl tlex-open-v3.pl \
         -tsd \
         -align \
         -p \
@@ -186,7 +186,7 @@ After first time run we recommend the user:
 ### **EXAMPLES**
 A small dataset example is provided. This dataset correspond only to a few TEs in an individual _Drosophila melanogaster_ strain. In addition, different results for the combination of individual strains are available. Run the following command lines in the "example" folder.
 
-    perl tlex-open-v2.5.pl \
+    perl tlex-open-v3.pl \
     -O example \
     -A 95 \
     -pairends yes \
@@ -197,7 +197,7 @@ A small dataset example is provided. This dataset correspond only to a few TEs i
 
 For TSD detection:
 
-    perl tlex-open-v2.5.pl \
+    perl tlex-open-v3.pl \
     -tsd \
     -align \
     -p \
@@ -211,7 +211,7 @@ For TSD detection:
 
 Combination of different strains (in folders: ):
 
-    perl tlex-open-v2.5.pl \
+    perl tlex-open-v3.pl \
     -combData
       
 ### **OUTPUTS**
