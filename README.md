@@ -1,4 +1,4 @@
-# **Welcome to _T-lex 2.5_ manual**
+# **Welcome to _T-lex 3_ manual**
 
 **Release 2.5:** Maria Bogaerts <maria.bogaerts@ibe.upf-csic.es>, Josefa Gonzalez <josefa.gonzalez@ibe.upf-csic.es>
 
@@ -59,13 +59,13 @@ To handle paired-end reads, separate the reads from a same pair ([strain name]) 
                    [strain name]_2.fastq
 
 ### **RUNNING T-LEX / USAGE**
-T-lex2.5 is composed by five different modules. All the modules can be run in the same job, excepting calculating frequencies for individual strains and TSD detection (see OPTIONS). Each module can be also run independently in case only one part of the analysis is required.
+T-lex3 is composed by five different modules. All the modules can be run in the same job, excepting calculating frequencies for individual strains and TSD detection (see OPTIONS). Each module can be also run independently in case only one part of the analysis is required.
 
 General usage:
 
     tlex-open-v2.5.pl [ Options ] [ -T TE list ] [ -M TE annotations ] [ -G reference genome ] [ -R NGS data ]
 
-First time running T-lex2.5 (for different options, see "OPTIONS/PARAMETERS"):
+First time running T-lex3 (for different options, see "OPTIONS/PARAMETERS"):
 
 1. General run for one strain: TE-filtering, presence, absence, combine
         
@@ -278,7 +278,7 @@ Using the option '-pooled', T-lex can also estimate the frequency for each TE in
 ### **FAQ**
 To be completed by the users
 
-**1. _T-lex2.5_ has stopped before finishing.**
+**1. _T-lex3_ has stopped before finishing.**
 >Try to increase the RAM used for the program. With some species, _T-lex_ requires more RAM to execute the program.
 
 **2. _Absence module_ is working but _Presence module_ is not.**
