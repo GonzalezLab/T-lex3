@@ -25,13 +25,13 @@ T-lex is a computational pipeline that detects presence and/or absence of annota
 5. Samtools version 1.4 or higher (_Li et al 2009_)
 6. Bcftools version 1.3.1 or higher (_Li et al 2009_)
 7. BWA version 0.7.15 or higher (_Li and Durbin 2009_)
-8. FastX toolkit 
+8. FastX toolkit 0.0.14 or higher | [FastX](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html) |
 
 **Only for the Target Site Duplication (TSD) detection:**
 
-8. Phrap version 1.090518 ("Phil's Revised Assembly Program" (_Green, 1999_) | [Phrap]( http://www.phrap.org) |
+9. Phrap version 1.090518 ("Phil's Revised Assembly Program" (_Green, 1999_) | [Phrap]( http://www.phrap.org) |
       - For downloading this program, you may need to contact the original authors to get permission 
-9. FastaGrep developed by the Department of Bioinformatics at the University of Tartu & Estonian Biocentre | [FastaGrep](http://bioinfo.ebc.ee) |
+10. FastaGrep developed by the Department of Bioinformatics at the University of Tartu & Estonian Biocentre | [FastaGrep](http://bioinfo.ebc.ee) |
 
 
 ### **INPUT FILES** 
@@ -51,7 +51,7 @@ NGS data has to be stored in one directory in which each subdirectory correspond
              [strain name 2]/
                    [strain name 2].fastq
 
-To handle paired-end reads, separate the reads from a same pair ([strain name]) in two fastq files ([strain name]_1.fastq and [strain name]_2.fastq). Each fastq file name should be renamed as 'XXX_X.fastq'. 
+To handle paired-end reads, separate the reads from a same pair ([strain name]) in two fastq files ([strain name]_1.fastq and [strain name]_2.fastq). Each fastq file name should be r enamed as 'XXX_X.fastq'. 
 
        [input strain directory]/
                [strain name]/
