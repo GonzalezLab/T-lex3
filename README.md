@@ -25,6 +25,7 @@ T-lex is a computational pipeline that detects presence and/or absence of annota
 5. Samtools version 1.4 or higher (_Li et al 2009_)
 6. Bcftools version 1.3.1 or higher (_Li et al 2009_)
 7. BWA version 0.7.15 or higher (_Li and Durbin 2009_)
+8. FastX toolkit 
 
 **Only for the Target Site Duplication (TSD) detection:**
 
@@ -73,13 +74,13 @@ First time running T-lex2.5 (for different options, see "OPTIONS/PARAMETERS"):
         -A 95 \
         -pairends yes \
         -s 'drosophila' \
-        -T TElist_file.txt \
-        -M TEannotation_file.txt \
-        -G genome_file.fa \
-        -R path_to_input/strain
+        -T absolute_path/TElist_file.txt \
+        -M absolute_path/TEannotation_file.txt \
+        -G absolute_path/genome_file.fa \
+        -R absolute_path/fastq_files/strain
     >**Output:** path_to_folder/tlex_projectname/Tresults
 
- 2. Frequency estimation in several individual strains (NOTE: projectname is required if different strains are run, otherwise the _tlex_output_ folder will be overwrite by the following strain)
+ 2. Frequency estimation in several individual strains (NOTE: _projectname_ is required if different strains are run, otherwise the _tlex_output_ folder will be overwritten by the following strain)
         
         perl tlex-open-v2.5.pl -combData
     >**Output:** path_to_folder/Tfreqs_output/Tresults  
@@ -95,7 +96,10 @@ First time running T-lex2.5 (for different options, see "OPTIONS/PARAMETERS"):
         -pairends yes \
         -s 'drosophila' \
         -pooled \
-        -T TElist_file.txt \-M TEannotation_file.txt -G genome_file.fa -R path_to_input/strain
+        -T absolute_path/TElist_file.txt \
+        -M absolute_path/TEannotation_file.txt \
+        -G absolute_path/genome_file.fa \
+        -R absolute_path/fastq_files/strain
 
     >**Output:** path_to_folder/tlex_projectname/Tresults
     >**Output:** path_to_folder/tlex_projectname/Tfreq
@@ -110,10 +114,10 @@ First time running T-lex2.5 (for different options, see "OPTIONS/PARAMETERS"):
         -A 95 \
         -pairends yes \
         -s 'drosophila' \
-        -T TElist_file.txt \
-        -M TEannotation_file.txt \
-        -G genome_file.fa \
-        -R path_to_input/strain
+        -T absolute_path/TElist_file.txt \
+        -M absolute_path/TEannotation_file.txt \
+        -G absolute_path/genome_file.fa \
+        -R absolute_path/fastq_files/strain
 
     >**Output:** path_to_folder/Tannot_TSDdetection       
 
@@ -186,10 +190,10 @@ A small dataset example is provided. This dataset correspond only to a few TEs i
     -O example \
     -A 95 \
     -pairends yes \
-    -T TElist_example.txt \
-    -M TEannotation_example.txt \
-    -G genome_example.fa \
-    -R fastq_files/example
+    -T absolute_path/TElist_example.txt \
+    -M absolute_path/TEannotation_example.txt \
+    -G absolute_path/genome_example.fa \
+    -R absolute_path/fastq_files/example
 
 For TSD detection:
 
@@ -200,10 +204,10 @@ For TSD detection:
     -O example \
     -A 95 \
     -pairends yes \
-    -T TElist_example.txt \
-    -M TEannotation_example.txt \
-    -G genome_example.fa \
-    -R fastq_files/example
+    -T absolute_path/TElist_example.txt \
+    -M absolute_path/TEannotation_example.txt \
+    -G absolute_path/genome_example.fa \
+    -R absolute_path/fastq_files/example
 
 Combination of different strains (in folders: ):
 
@@ -277,6 +281,8 @@ To be completed by the users
 **1. _T-lex2.5_ has stopped before finishing.**
 >Try to increase the RAM used for the program. With some species, _T-lex_ requires more RAM to execute the program.
 
+**2. _Absence module_ is working but _Presence module_ is not.**
+>Check if the fastq input files are properly placed in the correct folders.
     
 
 ### **REFERENCES** 
