@@ -185,16 +185,22 @@ After the first time run we recommend the user:
 | -minP | | minimum number of TE calls to estimate the TE frequency ( default: 1 )|
 
 ### **EXAMPLES**
-A small dataset example is provided. This dataset correspond only to a few TEs in an individual _Drosophila melanogaster_ strain. In addition, different results for the combination of individual strains are available. Run the following command lines in the "example" folder.
+A small dataset example is provided. This dataset correspond only to a few TEs in an individual _Drosophila melanogaster_ strain. In addition, different results for the combination of individual strains are available. Run the following command lines in the github folder.
+
+Get the absolute path:
+
+    absolute_path=$(pwd)
+
+Running T-lex:
 
     perl tlex-open-v3.pl \
     -O example \
     -A 95 \
     -pairends yes \
-    -T absolute_path/TElist_example.txt \
-    -M absolute_path/TEannotation_example.txt \
-    -G absolute_path/genome_example.fa \
-    -R absolute_path/fastq_files/example
+    -T $absolute_path/TElist_example.txt \
+    -M $absolute_path/TEannotation_example.txt \
+    -G $absolute_path/genome_example.fa \
+    -R $absolute_path/fastq_files/example
 
 For TSD detection:
 
@@ -205,14 +211,14 @@ For TSD detection:
     -O example \
     -A 95 \
     -pairends yes \
-    -T absolute_path/TElist_example.txt \
-    -M absolute_path/TEannotation_example.txt \
-    -G absolute_path/genome_example.fa \
-    -R absolute_path/fastq_files/example
+    -T $absolute_path/TElist_example.txt \
+    -M $absolute_path/TEannotation_example.txt \
+    -G $absolute_path/genome_example.fa \
+    -R $absolute_path/fastq_files/example
 
-Combination of different strains (in folders: ):
+Combination of different strains (run it in folder example/tlex_results/):
 
-    perl tlex-open-v3.pl \
+    perl ../../tlex-open-v3.pl \
     -combData
       
 ### **OUTPUTS**
