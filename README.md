@@ -36,12 +36,13 @@ T-lex is a computational pipeline that detects presence and/or absence of annota
 
 ### **INPUT FILES** 
 T-lex requires at least four input data: 
-TE list             - the list of the TEs to be analyzed with one TE identifier per line (e.g for a TE in Drosophila 'FBti0019293'). 
-TE annotations      - the annotations of these TEs. Tabulated file with five columns: 
-                        TE name / location / start nucleotide position/ end nucleotide position / strand (+ or -),
-                        e.g. 'FBti0019293 3R 405387 406627 - '. 
-reference genome    - the reference genomic sequences where TEs have been annotated in fasta format (e.g. '>3R XXXXX'). 
-NGS data            - the NGS data in official [fastq format](http://en.wikipedia.org/wiki/Fastq). 
+
+| File | Description | 
+|----|----|
+| TE list | the list of the TEs to be analyzed with one TE identifier per line (e.g for a TE in Drosophila 'FBti0019293') |
+|TE annotations | the annotations of these TEs. Tabulated file with five columns: TE name / location / start nucleotide position/ end nucleotide position / strand (+ or -), e.g. 'FBti0019293 3R 405387 406627 - ' |
+| reference genome | the reference genomic sequences where TEs have been annotated in fasta format (e.g. '>3R XXXXX') |
+| NGS data | the NGS data in official [fastq format](http://en.wikipedia.org/wiki/Fastq) |
 
 NGS data has to be stored in one directory in which each subdirectory corresponds to a single strain NGS data such as: 
 
@@ -127,7 +128,7 @@ If only one of the Presence or Absence modules is run, results are obtained in t
         path_to_folder/tlex_projectname/Tresults_absent
 
 
-After first time run we recommend the user:
+After the first time run we recommend the user:
 
 * T-lex generates a list with filtered TEs, TElist_file.txt_filtered, which is located in the same folder as the original input TE list. We recommend to use this new file as input list parameter, and bypass the TE-analysis with the command -noFilterTE (see options).
 * T-lex generates a new file according with the TSD detection. We recommend changing the annotation input file according with this information and use this new file as input annotation parameter. For following runs, the TSD module could be bypassed.
@@ -140,9 +141,9 @@ After first time run we recommend the user:
 | -A | int | maximum read length in the data set in bp ( default: 100 ) |
 | -O     |string     | project name (default: _tlex_output_)
 | -R     |string     | NGS data in FASTQ path
-| -G     |string     | Path to reference genome
-| -T     |string     | Path to TE list
-| -M     |string     | Path to TE annotation file
+| -G     |string     | Absolute path to reference genome
+| -T     |string     | Absolute path to TE list
+| -M     |string     | Absolute path to TE annotation file
 | -noclean |         |   keep the intermediate files
 | -binreads |        |   bypasses the generation of data in the absence and presence module
 | -h or -help |      |   display this help
@@ -276,7 +277,7 @@ Using the option '-pooled', T-lex can also estimate the frequency for each TE in
 
 
 ### **FAQ**
-To be completed by the users
+To be completed by the users.
 
 **1. _T-lex3_ has stopped before finishing.**
 >Try to increase the RAM used for the program. With some species, _T-lex_ requires more RAM to execute the program.
