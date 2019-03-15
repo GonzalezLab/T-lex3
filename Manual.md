@@ -197,10 +197,10 @@ Running T-lex:
     -O example \
     -A 95 \
     -pairends yes \
-    -T $absolute_path/TElist_example.txt \
-    -M $absolute_path/TEannotation_example.txt \
-    -G $absolute_path/genome_example.fa \
-    -R $absolute_path/fastq_files/example
+    -T $absolute_path/example/TElist_example.txt \
+    -M $absolute_path/example/TEannotation_example.txt \
+    -G $absolute_path/example/genome_example.fa \
+    -R $absolute_path/example/fastq_files/example
 
 For TSD detection:
 
@@ -211,10 +211,10 @@ For TSD detection:
     -O example \
     -A 95 \
     -pairends yes \
-    -T $absolute_path/TElist_example.txt \
-    -M $absolute_path/TEannotation_example.txt \
-    -G $absolute_path/genome_example.fa \
-    -R $absolute_path/fastq_files/example
+    -T $absolute_path/example/TElist_example.txt \
+    -M $absolute_path/example/TEannotation_example.txt \
+    -G $absolute_path/example/genome_example.fa \
+    -R $absolute_path/example/fastq_files/example
 
 Combination of different strains (run it in folder example/tlex_results/):
 
