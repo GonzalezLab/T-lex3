@@ -191,6 +191,12 @@ Get the absolute path:
 
     absolute_path=$(pwd)
 
+Decompress genome example:
+    
+    cd example
+    tar -xvzf genome_example.fa.tar.gz
+    cd ..
+
 Running T-lex:
 
     perl tlex-open-v3.pl \
