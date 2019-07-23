@@ -149,8 +149,8 @@ After the first time run we recommend the user:
 | -h or -help |      |   display this help
 | **For the TE filtering step:** |
 | -s  | string  | name of the species studied ( for RepeatMasker, e.g. 'drosophila' ) |
-| -d  |  float  |   minimum repeat density at the flanking regions of the TEs ( default: 0.5 (50%) ) |
-| -noFilterTE  | int  | do not filter TEs |
+| -d  |  float  |   minimum repeat density at the flanking regions of the TEs ( default: 0.5 (50%); the default parameter is set according to _Drosophila melanogaster_ genome, we recommend changing it deppending on the specie (i.e. for humans we recommend 0% ) |
+| -noFilterTE  |   | do not filter TEs |
 |  **Module specific parameters:** |
 | _PRESENCE_ |
 |-q |      | launch only the presence detection approach |
