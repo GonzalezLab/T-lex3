@@ -589,12 +589,12 @@ sub startup {
 ########################################################################################################################################################
 	
 sub help {
-	print "T-lex\ release 3\n\n";
+	print "T-lex\ release 2.3\n\n";
 	
-    print "T-lex3 works in modules (Presence, Absence, Combine, TSD detection, Frequency estimation) and each module requires a T-lex run\n\n";
+    print "T-lex2.3 works in modules (Presence, Absence, Combine, TSD detection, Frequency estimation) and each module requires a T-lex run\n\n";
 	print "\t- Usage:\n";
 	print "\t  ======\n\n"; 
-	print"\t  tlex-open-v3.pl [ options ] [ -T TE_list ] [ -M TE_annotations ] [ -G reference_genome ] [ -R Next-Generation Sequencing (NGS) data ]\n\n";
+	print"\t  tlex-open-v2.pl [ options ] [ -T TE_list ] [ -M TE_annotations ] [ -G reference_genome ] [ -R Next-Generation Sequencing (NGS) data ]\n\n";
 	print "\t\-T \t\tfile with the list of the transposable element (TE) identifiers\n";
 	print "\t\-M \t\ttabulated file with the TE annotations (line format : \'TE name location start postion end position\')\n";
 	print "\t\-G \t\tfile of the reference genomic sequences in FASTA\n";
@@ -1791,7 +1791,7 @@ sub PresenceDetectionMultipleStrains {
 		print "$outputdir\/$dir\n"; 
 		system ("mkdir $outputdir\/$dir") ; 
         if ($binreads == 0) {
-		    &generatefiles("$inputdir","$outputdir","$maxReadLength","$dir","$refgenome","$TE_map","$qual","$processes","$buffer");
+		    &generatefiles("$inputdir","$outputdir","$maxReadLength","$dir","$refgenome","$TE_map","$qual","$processes","$buffer","$junction");
         }
 		&scorecounter("$dir","$outputdir\/$dir\/detection","$maxReadLength","$junction","$buffer","$lim","$id","$qual","$maxReadLength");
 	    }	
@@ -1822,6 +1822,7 @@ sub generatefiles {
     my $qual=$_[6];
     my $processes=$_[7];
     my $buffer=$_[8];
+	my $junction=$_[9];
 	my $strainname = $strain;
     my $nucl = '';
 	my @nucl = '';
@@ -1961,7 +1962,7 @@ sub generatefiles {
     foreach my $line (@ref)
     {
         my $chromosome = $line->[1];
-        my $coord_left = $line->[2] - 1000;
+        my $coord_left = $line->[2] - $junction;
         my $coord_right = $line->[3] - $buffer;
         my $pileup_id = $line->[0];
         my $path_right = "$wd\/pileups\/$pileup_id\_RIGHT.pileup";
@@ -2013,8 +2014,8 @@ sub generatefiles {
 
         foreach my $opened_file (@opened_files) {
         if (defined($opened_file)) {
-            if ($no_line == ($opened_file->[0] + (1000 + $buffer))) {
-            if (scalar(@{$opened_file->[1]}) != (1001 + $buffer)) {
+            if ($no_line == ($opened_file->[0] + ($junction + $buffer))) {
+            if (scalar(@{$opened_file->[1]}) != ($junction + 1 + $buffer)) {
                 my $filename = $opened_file->[2];
                 my $size = scalar(@{$opened_file->[1]});
                 die("Number of lines for file $filename is not 1061, it's $size");
@@ -2111,10 +2112,10 @@ sub generatefiles {
         print("$chrom");
         print("$left");
 
-		push @left_boundaries, $left-1000;
+		push @left_boundaries, $left-$junction;
 		push @left_boundaries, $left+$buffer;
 		push @right_boundaries, $right-$buffer;
-		push @right_boundaries, $right+1000;
+		push @right_boundaries, $right+$junction;
 
 		system("cut -c $left_boundaries[0]-$left_boundaries[1] $wd\/ref_fasta\/$chrom > $wd\/fasta\/$te\_LEFT_.contig_UpperN");
 		system("echo \">$te\_LEFT.contig\" > $wd\/fasta\/$te\_LEFT.header");
@@ -2357,7 +2358,7 @@ sub scorecounter {
 		chomp $flank;
 		my $mbuffer=($buffer+($lim*2))*-1;
 		my $INflank=substr $flank, $mbuffer, $buffer+($lim*2); 
-		if (length($INflank) == 90) {
+		if (length($INflank) == $buffer+($lim*2)) {
 			$countL = ((uc $INflank) =~ tr/N//); # Number of N in the left side of the TE
 			$matchL = ($mbuffer+$countL)*-1;
 		} else {
@@ -2408,7 +2409,7 @@ sub scorecounter {
 			if ( $OUTtotmatchL >= $readlength-4 && $ref ne $cns ) {
 				$OUTidL_N++;
 			}
-			if ( $OUTtotmatchL >= $readlength-29 && $ref ne $cns ) {
+			if ( $OUTtotmatchL >= $readlength-($lim*2)-1 && $ref ne $cns ) {
 				$OUTidL_30++;
 			}
 		}
@@ -2458,7 +2459,7 @@ sub scorecounter {
 			$totmatchR++;
 		    }
 			$view_R++;
-			if ( $view_R >= 56 && $ref ne $cns ) {
+			if ( $view_R >= ($buffer-4) && $ref ne $cns ) {
 				$idR_N++;
 			}
 		}
@@ -2485,7 +2486,7 @@ sub scorecounter {
 			if ( $OUTtotmatchR <= 5 && $ref ne $cns ) {
 				$OUTidR_N++;
 			}
-			if ( $OUTtotmatchR <= 30 && $ref ne $cns ) {
+			if ( $OUTtotmatchR <= ($lim*2) && $ref ne $cns ) {
 				$OUTidR_30++;
 			}
 		}
@@ -3305,7 +3306,7 @@ sub FinalResults {
             #  no_data                        #
 	    ###################################
 	   
-       ### Modification in release 3: elimination of absent/poylmorphic and present/polymorphic
+       ### Modification in release 2.3: elimination of absent/poylmorphic and present/polymorphic
 	    if ($respr eq 'present'){ 
 		if ($resab eq 'present'){ 
 		    $conclusion = "present"; 
@@ -3377,7 +3378,7 @@ sub FreqEstimate {
 
     if ($pooled){
 
-    # Release 3: modification in the pooled frequency estimation
+    # Release 2.3: modification in the pooled frequency estimation
 
 	print "frequency estimates using pooled data...\n";  
 	open (OUTP,">Tfreq_pooled"); 
@@ -3463,7 +3464,7 @@ sub FreqEstimate {
     }
     else{
 
-    # Release 3: modification in the individual frequency estimation
+    # Release 2.3: modification in the individual frequency estimation
     
 	print "frequency estimates using single strains...\n";  
 	open (IN,"Tresults");  
