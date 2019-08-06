@@ -149,7 +149,7 @@ After the first time run we recommend the user:
 | -h or -help |      |   display this help
 | **For the TE filtering step:** |
 | -s  | string  | name of the species studied ( for RepeatMasker, e.g. 'drosophila' ) |
-| -d  |  float  |   minimum repeat density at the flanking regions of the TEs ( default: 0.5 (50%); the default parameter is set according to _Drosophila melanogaster_ genome, we recommend changing it deppending on the specie (i.e. for humans we recommend 0% ) |
+| -d  |  float  |   minimum repeat density at the flanking regions of the TEs ( default: 0.5 (50%); the default parameter is set according to _Drosophila melanogaster_ genome, we recommend changing it deppending on the specie (i.e. for humans we recommend 1 (100%) ) |
 | -noFilterTE  |   | do not filter TEs |
 |  **Module specific parameters:** |
 | _PRESENCE_ |
@@ -164,7 +164,7 @@ After the first time run we recommend the user:
 | _ABSENCE_ | 
 | -p        |       | launch only the absence detection approach |
 | -f        |  int  | length of the flanking sequences to extract and concatenate in bp ( default: 125 )|
-| -v        |  int  | minimum read length spanning the two TE sides in bp ( default: 15 )|
+| -v        |  int  | minimum read length spanning the two TE sides in bp ( default: 20 )|
 | -pairends |        string  |    PE mapping at 'no' by default ('yes' or 'no')|
 | -lima     |  int  | minimum non-repeated region on each side of the sequence in bp ( default: 10 )    |       
 | -binref   |       | bypasses the generation of the new reference genome without insertions|
