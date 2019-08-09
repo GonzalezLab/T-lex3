@@ -94,9 +94,9 @@ sub startup {
 		'pooled' => \$pooleddata,
 		'pairends=s' => \$PE,
 		'processes=i' => \$processes,
-        'minR=i' => \$minreads, # V2.5 for setting minimum number of reads for calculating frequencies in pools
-        'maxR=i' => \$maxreads, # V2.5 for setting maximum number of reads for calculating frequencies in pools
-        'minP=i' => \$minpop); # V2.5 for setting minimum number of individuals for calculating frequencies in individual strains
+        'minR=i' => \$minreads, # V3 for setting minimum number of reads for calculating frequencies in pools
+        'maxR=i' => \$maxreads, # V3 for setting maximum number of reads for calculating frequencies in pools
+        'minP=i' => \$minpop); # V3 for setting minimum number of individuals for calculating frequencies in individual strains
 
    
    
@@ -121,7 +121,7 @@ sub startup {
 
     if($combine_strains){
 	print "\n\n **************************************************************************************************************************************\n";
-	print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t\tCombine the presence/absence results from different strain(s) *\n\t\t\t\t\t\t\n";
+	print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t\tCombine the presence/absence results from different strain(s) *\n\t\t\t\t\t\t\n";
 	print "\t\t\t * only the parameters for the combination of the presence and absence result may be necessary *\n";
 	&combine_results("$startdirectory");
 	die "\n";
@@ -129,7 +129,7 @@ sub startup {
     
     if($combine_all){
 	print "\n\n **************************************************************************************************************************************\n";
-	print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t\tCombine the frequency estimates, the analysis of the TE flanking regions and the TSD detection *\n\t\t\t\t\t\t\n";
+	print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t\tCombine the frequency estimates, the analysis of the TE flanking regions and the TSD detection *\n\t\t\t\t\t\t\n";
 	if ($pooleddata){
 	    &CombineAll("$outputdir","$pooleddata");
 	}
@@ -142,7 +142,7 @@ sub startup {
     my $new_TE_list;
     if($combine){
 	print "\n\n **************************************************************************************************************************************\n";
-	print "\n\t\t\t\t\t\t\t  * T-lex release 2 \n\t\t\t\tCombine the presence/absence results from one strain *\n\t\t\t\t\t\t\n";
+	print "\n\t\t\t\t\t\t\t  * T-lex release 3 \n\t\t\t\tCombine the presence/absence results from one strain *\n\t\t\t\t\t\t\n";
 	print "* Specify the project name if necessary\n";
 	unless ($TE_list) {
 	    die "* Must specify the TE list after the TE filtering step\n";
@@ -166,7 +166,7 @@ sub startup {
 	if ($pooleddata) {
 		if (-e "$outputdir\/Tresults"){
 			print "\n\n **************************************************************************************************************************************\n";
-			print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t\tReturn the frequency estimates of given sequence(s) in multiple strain(s) *\n\t\t\t\t\t\t\n";
+			print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t\tReturn the frequency estimates of given sequence(s) in multiple strain(s) *\n\t\t\t\t\t\t\n";
 			&FreqEstimate("$startdirectory\/$outputdir","$pooleddata","$maxreads","$minreads","$minpop");
 			die "\n";
 		}
@@ -177,7 +177,7 @@ sub startup {
 		print "$startdirectory\/Tfreqs_output\/Tresults";
 		if (-e "$startdirectory\/Tfreqs_output\/Tresults"){
 			print "\n\n **************************************************************************************************************************************\n";
-			print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t\tReturn the frequency estimates of given sequence(s) in multiple strain(s) *\n\t\t\t\t\t\t\n";
+			print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t\tReturn the frequency estimates of given sequence(s) in multiple strain(s) *\n\t\t\t\t\t\t\n";
 			&FreqEstimate("$startdirectory\/Tfreqs_output","$pooleddata","$maxreads","$minreads","$minpop");
 			die "\n";
 		}
@@ -193,12 +193,12 @@ sub startup {
 	else{
 	    if($tsd){
 		print "\n\n **************************************************************************************************************************************\n";
-		print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t\t\t\t TSD detection (requires the alignments) *\n\t\t\t\t\t\t\n";
+		print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t\t\t\t TSD detection (requires the alignments) *\n\t\t\t\t\t\t\n";
 		&MultiAlign("$outputdir","$TE_list","$strains","$flank","0","1");
 	    }
 	    else{
 		print "\n\n **************************************************************************************************************************************\n";
-		print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t\t\t\t Multiple Alignment report only *\n\t\t\t\t\t\t\n";
+		print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t\t\t\t Multiple Alignment report only *\n\t\t\t\t\t\t\n";
 	       
 		unless ($shrimponly) {
 		    &MultiAlign("$outputdir","$TE_list","$strains","$flank","1","0");
@@ -244,16 +244,16 @@ sub startup {
     
     print "\n\n **************************************************************************************************************************************\n";
     if ($bwaonly) {
-	print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t  Detect the presence of given sequence(s) in strain(s) using BWA program *\n";
+	print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t  Detect the presence of given sequence(s) in strain(s) using BWA program *\n";
 	print PARAM "T-lex release 1 Detect the presence of given sequence(s) in strain(s) using MAQ program\n";
     }
     elsif ($shrimponly) {
-	print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t  Detection of the absence of given sequence(s) in strain(s) using SHRIMP program *\n"; 
+	print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t  Detection of the absence of given sequence(s) in strain(s) using SHRIMP program *\n"; 
 	print PARAM "T-lex release 1 Detection of the absence of given sequence(s) in strain(s) using SHRIMP program\n"; 
     }
     else {
-	print "\n\t\t\t\t\t\t\t * T-lex release 2 \n\t\t\t\tReport the presence/absence of given sequence(s) in strain(s) * \n\t\t\t\t\t\t and return their frequency\n";   
-	print PARAM "T-lex release 2 Report the presence/absence of given sequence(s) in strain(s) and return their frequency\n";   
+	print "\n\t\t\t\t\t\t\t * T-lex release 3 \n\t\t\t\tReport the presence/absence of given sequence(s) in strain(s) * \n\t\t\t\t\t\t and return their frequency\n";   
+	print PARAM "T-lex release 3 Report the presence/absence of given sequence(s) in strain(s) and return their frequency\n";   
     }
     my $start_time = localtime();
     print "\t\t\t\t\t\t    * $start_time * \n";
@@ -589,7 +589,7 @@ sub startup {
 ########################################################################################################################################################
 	
 sub help {
-	print "T-lex\ release 2.3\n\n";
+	print "T-lex\ release 3\n\n";
 	
     print "T-lex2.3 works in modules (Presence, Absence, Combine, TSD detection, Frequency estimation) and each module requires a T-lex run\n\n";
 	print "\t- Usage:\n";
@@ -3306,7 +3306,7 @@ sub FinalResults {
             #  no_data                        #
 	    ###################################
 	   
-       ### Modification in release 2.3: elimination of absent/poylmorphic and present/polymorphic
+       ### Modification in release 3: elimination of absent/poylmorphic and present/polymorphic
 	    if ($respr eq 'present'){ 
 		if ($resab eq 'present'){ 
 		    $conclusion = "present"; 
