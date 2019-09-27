@@ -4,6 +4,8 @@
 
 [You can find us on Github!](https://github.com/GonzalezLab/T-lex)
 
+[Problems during installation? Try our DOCKER file](https://github.com/GonzalezLab/T-lex3/blob/master/docker.md)
+
 T-lex is a computational pipeline that detects presence and/or absence of annotated individual transposable elements (TEs) using next-generation sequencing (NGS) data. 
 
 ### Folder content
