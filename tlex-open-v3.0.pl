@@ -591,7 +591,7 @@ sub startup {
 sub help {
 	print "T-lex\ release 3\n\n";
 	
-    print "T-lex2.3 works in modules (Presence, Absence, Combine, TSD detection, Frequency estimation) and each module requires a T-lex run\n\n";
+    print "T-lex 3 works in modules (Presence, Absence, Combine, TSD detection, Frequency estimation) and each module requires a T-lex run\n\n";
 	print "\t- Usage:\n";
 	print "\t  ======\n\n"; 
 	print"\t  tlex-open-v2.pl [ options ] [ -T TE_list ] [ -M TE_annotations ] [ -G reference_genome ] [ -R Next-Generation Sequencing (NGS) data ]\n\n";
@@ -1914,7 +1914,8 @@ sub generatefiles {
     # Filter bam by readlength
     system("samtools view -h $outputdir\/$strain\/$strainname\_bwa_MQ_identity.bam | awk 'length(\$10) > $maxReadLength-1 || \$1 ~ /^@/' | samtools view -bS - > $outputdir\/$strain\/$strainname\_bwa_MQ.bam");
     # Make the pileup for all genome; at the same time as the previous step it can be generated the fastq file
-    system("samtools mpileup -O -aa -f $refgenome $outputdir\/$strain\/$strainname\_bwa_MQ.bam > $outputdir\/$strain\/$strainname\_bwa_MQ_pileups & samtools mpileup -aa -uf $refgenome $outputdir\/$strain\/$strainname\_bwa_MQ.bam | bcftools call -c | vcfutils.pl vcf2fq > $outputdir\/$strain\/$strainname\_cns_MQ.fastq");
+    system("samtools mpileup -O -aa -f $refgenome $outputdir\/$strain\/$strainname\_bwa_MQ.bam > $outputdir\/$strain\/$strainname\_bwa_MQ_pileups");
+	system("samtools mpileup -aa -uf $refgenome $outputdir\/$strain\/$strainname\_bwa_MQ.bam | bcftools call -c | vcfutils.pl vcf2fq > $outputdir\/$strain\/$strainname\_cns_MQ.fastq");
     
     if (! -e "$outputdir\/$strain\/chromosomes_up") {
  		mkdir("$outputdir\/$strain\/chromosomes_up");
@@ -1938,13 +1939,24 @@ sub generatefiles {
     print "[PILEUP] Removing previous separated chromosomas...\n";
     system("rm -rf $wd\/chromosomes/*"); # Remove previous pileup by chomosomes
 
-    print "[PILEUP] Separating pileup by chromosoma...\n";
-    system("awk -F\$'\\t' '{filename = \"$wd\/chromosomes\/\" \$1; if (length(\$1) <=2) print > filename }' $outputdir\/$strain\/$strainname\_bwa_MQ_pileups");
+	print "[PILEUP] Separating pileup by chromosoma...\n";
+
+	# We need to generate a companion script because of Perl's system call calling sh and messing with awk instructions
+	my $script_filename = "$wd/pileup_by_chromosoma.sh";
+
+  # Delete previous companion scripts
+  system("rm -rf $script_filename");
+  # Create the script
+  open(my $script_file, '>', $script_filename) or die "Cannot open companiuon script for writing: $script_filename";
+  print $script_file "awk -F\$'\\t' '{filename = \"$wd\/chromosomes\/\" \$1; if (length(\$1) <=2) print > filename }' $outputdir\/$strain\/$strainname\_bwa_MQ_pileups";
+  close $script_file;
+  # Execute it
+  system("bash $script_filename");
 
     # NOTE: Chromosmoes should be sorted by positon
     system("mkdir -p $wd\/pileups"); # Create folder in case it was not created previously
-    print "[PILEUP] Removing previous separated pileups...\n";
-    system("rm -rf $wd\/pileups/*"); # Remove previous pileup by chomosomes
+    print "[PILEUP] Removing previous separated pileups…\n";
+	system("rm -rf $wd\/pileups/*"); # Remove previous pileup by chomosomes
     
     # Separate in different lists by chromosome
     my @chromosomes;
@@ -2070,7 +2082,7 @@ sub generatefiles {
 		}
 	}
 	# Create view files
-	print("python scripts\/view_2.py $TE_map $strainname $outputdir\/$strain");
+	#print("python scripts\/view_2.py $TE_map $strainname $outputdir\/$strain");
 
 	# Mimic a view file from Tlex using pileup and reference fasta outputs
 	my @ref;
@@ -2502,6 +2514,8 @@ sub scorecounter {
 		my $npLcount_filtered = '';
 		my $npRcount_filtered = '';
 
+		my $outside_junction = ($lim*2)*0.05;
+
 		# MODIFICATION 17/10/2017
 		# This loop considers the number of N inside the 60 TE bp and 30 bp outside the junction.
 		# There should be a minimum of 45 non-N bp, so it ensures a minimum of 15 bp inside the TE (lim parameter).
@@ -2512,7 +2526,7 @@ sub scorecounter {
 	    }
 	    else{
             # MODIFICATION DECEMBER 2017
-			if ($idL == 0 && $pmL >= -10 && $OUTidL_30 <= 11 || $idR == 0 && $pmR >= -10 && $OUTidR_30 <= 11 ) {
+			if ($idL == 0 && $pmL >= -10 && $OUTidL_30 <= $outside_junction + 10 || $idR == 0 && $pmR >= -10 && $OUTidR_30 <= $outside_junction + 10 ) {
 				$detection="absent";
 				$npLcount_filtered = "0";
 				$npRcount_filtered = "0";
@@ -3378,7 +3392,7 @@ sub FreqEstimate {
 
     if ($pooled){
 
-    # Release 2.3: modification in the pooled frequency estimation
+    # Release 3: modification in the pooled frequency estimation
 
 	print "frequency estimates using pooled data...\n";  
 	open (OUTP,">Tfreq_pooled"); 
@@ -3464,7 +3478,7 @@ sub FreqEstimate {
     }
     else{
 
-    # Release 2.3: modification in the individual frequency estimation
+    # Release 3: modification in the individual frequency estimation
     
 	print "frequency estimates using single strains...\n";  
 	open (IN,"Tresults");  
