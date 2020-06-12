@@ -21,7 +21,7 @@ T-lex is a computational pipeline that detects presence and/or absence of annota
 1. Unix system with Perl version 5.10.0 or higher | [Perl](http://www.perl.org/get.html) |
 2. RepeatMasker and libraries open-3.2.8 or higher (_Smit 1996-2010_) | [RepeatMasker](http://www.repeatmasker.org/RMDownload.html) | [Libraries](http://www.girinst.org) |
 3. SHRIMP2 - Short Read Mapping Package- Release 2.2.1/Oct. 31, 2011 (_David et al 2011_) | [SHRIMP2](http://compbio.cs.toronto.edu/shrimp) |
-4. BLAT version 34 or greater (_Kent 2002_) | [BLAT](http://www.soe.ucsc.edu/~kent) |
+4. BLAT version 34 or greater (_Kent 2002_) FREE FOR ACADEMIC, NON-PROFIT OR PERSONAL USE | [BLAT](http://www.soe.ucsc.edu/~kent) |
 5. Samtools version 1.4 or higher (_Li et al 2009_)
 6. Bcftools version 1.3.1 or higher (_Li et al 2009_)
 7. BWA version 0.7.15 or higher (_Li and Durbin 2009_)
